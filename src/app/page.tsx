@@ -5,7 +5,7 @@ export default async function Home() {
   console.log(results)
 	return (
 		<main>
-			<h1>Products</h1>
+			<h1 className='text-2xl font-abeezee'>Products</h1>
 		</main>
 	)
 }
