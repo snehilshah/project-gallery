@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { ABeeZee } from 'next/font/google'
 import './globals.tail.css'
+import Link from 'next/link'
 
 const abeezee = ABeeZee({
 	weight: '400',
 	subsets: ['latin'],
 	display: 'swap',
-  variable: '--font-abeezee'
+	variable: '--font-abeezee',
 })
 
 export const metadata: Metadata = {
@@ -22,7 +23,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={abeezee.className}>
-				<div className="">{children}</div>
+				<header className="bg-blue-400">
+					<Link href="/" replace>
+						Back to Home
+					</Link>
+				</header>
+				{children}
+				<footer className="bg-green-400">This is the footer</footer>
 			</body>
 		</html>
 	)
