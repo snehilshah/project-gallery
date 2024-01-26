@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { ABeeZee } from 'next/font/google'
 import './globals.tail.css'
-import Navbar from './components/Navbar'
-import { ThemeProvider } from './components/theme-provider'
+import Navbar from '@/components/Navbar'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const abeezee = ABeeZee({
 	weight: '400',
@@ -24,12 +24,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={abeezee.className}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					<Navbar />
 					{children}
 				</ThemeProvider>
