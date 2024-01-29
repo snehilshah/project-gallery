@@ -1,10 +1,10 @@
 import mysql from 'mysql2'
 
 const pool = mysql.createPool({
-	host: 'aws.connect.psdb.cloud',
-	user: '6tz5ft11il2ksuq1c6m4',
-	database: 'project-gallery',
-	password: 'pscale_pw_yeCKSUjjqCHQ1MHZPyyQTeUqE5MCYReuBjONekUgYh2',
+	host: process.env.NEXT_PUBLIC_HOST,
+	user: process.env.NEXT_PUBLIC_USERNAME,
+	database: process.env.NEXT_PUBLIC_DATABASE,
+	password: process.env.NEXT_PUBLIC_PASSWORD,
 	waitForConnections: true,
 	connectionLimit: 10,
 	maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
