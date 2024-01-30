@@ -1,7 +1,7 @@
 import db from '@/lib/db'
 
 export default async function Home() {
-	const [results] = await db.query('SELECT * FROM products', ['Page', 45])
+	const [results] = await db.query('SELECT * FROM products')
 	console.log(results)
 	let res = JSON.stringify(results)
 	return (
