@@ -2,7 +2,7 @@ import mysql from 'mysql2'
 
 const pool = mysql.createPool({
 	host: 'aws.connect.psdb.cloud',
-	user: '3te6n0yeratnlvjyuox2',
+	user: 'lyr44g5swoxig5l0cznv',
 	database: 'project-gallery',
 	password: process.env.DB_PASSWORD,
 	waitForConnections: true,
