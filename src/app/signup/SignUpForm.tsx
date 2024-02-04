@@ -34,11 +34,18 @@ export default function SignUpForm() {
 			password: '',
 			confirmPassword: '',
 		},
-		mode: "onTouched"
+		mode: 'onTouched',
 	})
 
-	function onSubmit(data: z.infer<typeof UserSchema>) {
-		console.log(data)
+	async function onSubmit(data: z.infer<typeof UserSchema>) {
+		const response = await fetch('/api/signup', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+		console.log('This is response', await response.json())
 	}
 
 	return (
@@ -61,7 +68,20 @@ export default function SignUpForm() {
 									<FormItem>
 										<FormLabel>Username</FormLabel>
 										<FormControl>
-											<Input type="text" placeholder="Username" {...field} />
+											<Input type="text" placeholder="Unique Name across Project Gallery" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="name"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Name</FormLabel>
+										<FormControl>
+											<Input type="text" placeholder="Your Name" {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
