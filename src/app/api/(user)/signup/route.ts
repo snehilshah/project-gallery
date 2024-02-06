@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
 	// Check if user already exists
 	const [userList, fields] = (await db.execute(
-		'SELECT * FROM `user` WHERE email = ?',
+		'SELECT `email` FROM `user` WHERE email = ?',
 		[body.email]
 	)) as any[]
 
