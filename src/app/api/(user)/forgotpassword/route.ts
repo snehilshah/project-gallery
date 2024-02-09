@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
 import { error } from 'console'
+import { randomUUID } from 'crypto'
 
 const ForgotPasswordSchema = z.object({
 	email: z
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
 	}
 
 	const [userList, fields] = (await db.execute(
-		'SELECT `email` FROM `user` WHERE email = ?',
+		'SELECT `email` FROM `users` WHERE email = ?',
 		[email]
 	)) as any[]
 
@@ -51,14 +52,6 @@ export async function POST(request: NextRequest) {
 		},
 	})
 
-	const mailOptions = {
-		from: process.env.USER_EMAIL,
-		to: email,
-		subject: 'Reset Password',
-		text: 'Click on the link to reset your password: http://localhost:3000/resetpassword',
-		html: '<a href="http://localhost:3000/resetpassword">Click here to reset your password</a>',
-	}
-
 	transporter.verify((error, success) => {
 		if (error) {
 			console.log(error)
@@ -67,11 +60,29 @@ export async function POST(request: NextRequest) {
 		}
 	})
 
+	const forgotPasswordToken = randomUUID().replace(/-/g, '')
+	const mailOptions = {
+		from: process.env.USER_EMAIL,
+		to: email,
+		subject: 'Reset Password',
+		text: 'Click on the link to reset your password: http://localhost:3000/resetpassword',
+		html: `<a href="http://localhost:3000/resetpassword/${forgotPasswordToken}">Click here to reset your password</a>`,
+	}
+	try {
+		const [results, fields] = await db.execute(
+			'INSERT INTO `activation_token` (email, token, type) VALUES (?, ?, ?)',
+			[email, forgotPasswordToken, 'RESET_PASSWORD']
+		)
+	} catch (err) {
+		console.log(err)
+		return NextResponse.json({ message: 'Email sent' }, { status: 500 })
+	}
+
 	try {
 		await transporter.sendMail(mailOptions)
 		return NextResponse.json({ message: 'Email sent' }, { status: 200 })
-	} catch (error) {
-		console.log(error)
-		return NextResponse.json({ error: 'Email not sent' }, { status: 400 })
+	} catch (err) {
+		console.log(err)
+		return NextResponse.json({ error: 'Email not sent' }, { status: 500 })
 	}
 }
