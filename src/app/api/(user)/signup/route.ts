@@ -3,8 +3,15 @@ import { UserSchema } from '@/lib/ZodSchema/UserSchema'
 import db from '@/lib/db'
 import bcrypt from 'bcrypt'
 
+interface body {
+	username: string
+	name: string
+	email: string
+	password: string
+}
+
 export async function POST(req: NextRequest) {
-	const body = await req.json()
+	const body: body = await req.json()
 	console.log('On server', body)
 	const parsed = UserSchema.safeParse(body)
 	if (!parsed.success) {
@@ -19,9 +26,9 @@ export async function POST(req: NextRequest) {
 	)) as any[]
 
 	// If multiple users with same email, return error
-	if (userList.length > 0) {
+	if (userList) {
 		return NextResponse.json(
-			{ error: 'User already exists' },
+			{ error: `User with email ${body.email} already exists` },
 			{
 				status: 400,
 			}
@@ -30,7 +37,6 @@ export async function POST(req: NextRequest) {
 
 	const salt = await bcrypt.genSalt(Math.random())
 	const hashedPassword = await bcrypt.hash(body.password, salt)
-
 
 	try {
 		const [results, fields] = await db.execute(
@@ -51,7 +57,6 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
 	console.log('enter server ')
 	const body = await req.json()
-	console.log('On server', body)
 
 	return NextResponse.json('Hello')
 }
