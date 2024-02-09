@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { UserSchema } from '@/lib/ZodSchema/UserSchema'
 import db from '@/lib/db'
 import bcrypt from 'bcrypt'
+import { randomUUID } from 'crypto'
 
 interface body {
 	username: string
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
 
 	// Check if user already exists
 	const [userList, fields] = (await db.execute(
-		'SELECT `email` FROM `user` WHERE email = ?',
+		'SELECT `email` FROM `users` WHERE email = ?',
 		[body.email]
 	)) as any[]
 
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
 
 	try {
 		const [results, fields] = await db.execute(
-			'INSERT INTO `user` (user_name, name, email, email_verified, password) VALUES (?, ?, ? , ?, ?)',
+			'INSERT INTO `users` (user_name, name, email, email_verified, password) VALUES (?, ?, ? , ?, ?)',
 			[body.username, body.name, body.email, 0, hashedPassword]
 		)
 	} catch (err) {
