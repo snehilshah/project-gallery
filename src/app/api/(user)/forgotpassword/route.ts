@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { UserSchema } from '@/lib/ZodSchema/UserSchema'
 import db from '@/lib/db'
-import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
-import { error } from 'console'
 import { randomUUID } from 'crypto'
 
 const ForgotPasswordSchema = z.object({
@@ -15,8 +12,6 @@ const ForgotPasswordSchema = z.object({
 			message: 'Email is required',
 		}),
 })
-
-type ForgotPasswordSchemaT = z.infer<typeof ForgotPasswordSchema>
 
 export async function POST(request: NextRequest) {
 	const { email } = await request.json()
@@ -41,8 +36,7 @@ export async function POST(request: NextRequest) {
 			}
 		)
 	}
-	console.log(process.env.USER_EMAIL)
-	console.log(process.env.USER_PASSWORD)
+
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		host: 'smtp.gmail.com',

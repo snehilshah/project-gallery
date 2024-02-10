@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { UserSchema } from '@/lib/ZodSchema/UserSchema'
 import db from '@/lib/db'
 import bcrypt from 'bcrypt'
-import { randomUUID } from 'crypto'
 
 interface body {
 	username: string
