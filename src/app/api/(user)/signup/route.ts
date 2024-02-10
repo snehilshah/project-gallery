@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 	)) as any[]
 
 	// If multiple users with same email, return error
-	if (userList) {
+	if (userList.length > 0) {
 		return NextResponse.json(
 			{ error: `User with email ${body.email} already exists` },
 			{
@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
 		)
 	}
 
-	const salt = await bcrypt.genSalt(Math.random())
-	const hashedPassword = await bcrypt.hash(body.password, salt)
+	// const salt = await bcrypt.genSalt()
+	const hashedPassword = await bcrypt.hash(body.password, 10)
 
 	try {
 		const [results, fields] = await db.execute(
