@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
 	}
 	try {
 		const [results, fields] = await db.execute(
-			'INSERT INTO `activation_token` (email, token, type) VALUES (?, ?, ?)',
+			'INSERT INTO `tokens` (email, token, type) VALUES (?, ?, ?)',
 			[email, forgotPasswordToken, 'RESET_PASSWORD']
 		)
 	} catch (err) {
@@ -79,4 +79,13 @@ export async function POST(request: NextRequest) {
 		console.log(err)
 		return NextResponse.json({ error: 'Email not sent' }, { status: 500 })
 	}
+}
+
+export async function PATCH(request: NextRequest) {
+	const {token, newPassword} = await request.json()
+	
+	try{
+		
+	}
+	catch(err){}
 }
