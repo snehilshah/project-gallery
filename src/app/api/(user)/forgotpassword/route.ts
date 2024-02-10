@@ -3,6 +3,7 @@ import db from '@/lib/db'
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
+import { hash } from 'bcrypt'
 
 const ForgotPasswordSchema = z.object({
 	email: z
@@ -82,10 +83,36 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-	const {token, newPassword} = await request.json()
-	
-	try{
-		
+	const { token, newPassword } = await request.json()
+
+	try {
+		const [userExist, fields] = (await db.execute(
+			'SELECT email FROM `tokens` WHERE token = ? AND type = ?',
+			[token, 'RESET_PASSWORD']
+		)) as any[]
+
+		if (userExist.length === 0) {
+			return NextResponse.json({ error: 'Invalid token' }, { status: 400 })
+		}
+
+		const hashedPassword = await hash(newPassword, 10)
+
+		const [results, fields2] = await db.execute(
+			'UPDATE `users` SET password = ? WHERE email = ?',
+			[hashedPassword, userExist[0].email]
+		)
+
+		const [results3, fields3] = await db.execute(
+			'DELETE FROM `tokens` WHERE token = ?',
+			[token]
+		)
+
+		return NextResponse.json({ message: 'Password updated' }, { status: 200 })
+	} catch (err) {
+		console.log(err)
+		return NextResponse.json(
+			{ error: 'Error updating password' },
+			{ status: 500 }
+		)
 	}
-	catch(err){}
 }
