@@ -1,5 +1,6 @@
 'use client'
 import * as z from 'zod'
+import { ForgotPasswordSchema } from '@/lib/ZodSchema/UserSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import {
@@ -20,15 +21,6 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
-
-const ForgotPasswordSchema = z.object({
-	email: z
-		.string()
-		.email()
-		.refine((value) => value !== '', {
-			message: 'Email is required',
-		}),
-})
 
 export default function ForgotPasswordForm() {
 	const { toast } = useToast()

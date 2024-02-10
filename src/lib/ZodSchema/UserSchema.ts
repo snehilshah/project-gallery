@@ -15,7 +15,7 @@ export const UserSchema = z
 				message: 'Name must be at least 3 characters long',
 			})
 			.max(20),
-			
+
 		email: z
 			.string()
 			.email()
@@ -55,3 +55,12 @@ export const UserSchema = z
 		message: 'Passwords do not match',
 		path: ['confirmPassword'],
 	})
+
+export const ForgotPasswordSchema = z.object({
+	email: z
+		.string()
+		.email()
+		.refine((value) => value !== '', {
+			message: 'Email is required',
+		}),
+})
