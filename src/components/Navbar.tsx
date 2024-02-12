@@ -5,6 +5,8 @@ import { ThemeButton } from './theme-provider'
 import { LoginDropDown } from './auth/LoginDropDown'
 
 export default function Navbar() {
+
+	
 	return (
 		<div className="mx-auto flex">
 			<Image

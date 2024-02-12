@@ -3,6 +3,8 @@ import { ABeeZee } from 'next/font/google'
 import './globals.tail.css'
 import Navbar from '@/components/Navbar'
 import { ThemeProvider } from '@/components/theme-provider'
+import Provider from '@/components/Provider'
+import { Toaster } from '@/components/ui/toaster'
 
 const abeezee = ABeeZee({
 	weight: '400',
@@ -24,10 +26,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={abeezee.className}>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-					<Navbar />
-					{children}
-				</ThemeProvider>
+				<Provider>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						<Navbar />
+						{children}
+					</ThemeProvider>
+				</Provider>
+				<Toaster />
 			</body>
 		</html>
 	)

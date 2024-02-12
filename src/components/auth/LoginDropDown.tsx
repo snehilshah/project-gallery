@@ -7,8 +7,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { User } from 'lucide-react'
 import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 
 function LoginDropDown() {
+	const { data: session, status } = useSession()
+	console.log(session)
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -16,14 +20,29 @@ function LoginDropDown() {
 					<User className="h-[1.2rem] w-[1.2rem]" />
 				</Button>
 			</DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>
-          <Link href='/signup'>Sign Up</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href='/login'>Login</Link>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+			<DropdownMenuContent>
+				{status === 'unauthenticated' && (
+					<DropdownMenuItem>
+						<Link href="/signin">Login</Link>
+					</DropdownMenuItem>
+				)}
+				{status === 'authenticated' && (
+					<>
+						<DropdownMenuItem>
+							<p>{session.user?.name}</p>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<p className="text-red-400" onClick={() => signOut()}>
+								Sign Out
+							</p>
+						</DropdownMenuItem>
+					</>
+				)}
+
+				<DropdownMenuItem>
+					<Link href="/login">Login</Link>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
 		</DropdownMenu>
 	)
 }
