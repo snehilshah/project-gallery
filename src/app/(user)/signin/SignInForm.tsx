@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SignInSchema } from '@/lib/ZodSchema/UserSchema'
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
 	Form,
@@ -27,9 +27,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SignalIcon } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
+import { Response } from 'next-auth'
 
 export default function SignInForm() {
-	const { data: session, status } = useSession()
+	const { data: Session } = useSession()
 	const router = useRouter()
 	const { toast } = useToast()
 	const form = useForm<z.infer<typeof SignInSchema>>({
@@ -43,26 +44,36 @@ export default function SignInForm() {
 
 	async function onSubmit(data: z.infer<typeof SignInSchema>) {
 		try {
-			const response = await signIn('credentials', {
+			const response = (await signIn('credentials', {
 				email: data.email,
 				password: data.password,
 				redirect: false,
-			})
+			})) as Response
 
-			console.log('This is response', response)
-			console.log('This is session', session)
-
-			toast({
-				title: 'Sign In Successful!',
-				description: 'Successfully signed in to your account.',
-			})
+			if (!response.ok) {
+				toast({
+					title: 'Sign Unsuccessful!',
+					description: response.error,
+					variant: 'destructive',
+				})
+			} else {
+				toast({
+					title: 'Sign Successful!',
+					description: 'You have been signed in successfully.',
+				})
+			}
 			router.push('/')
+			router.refresh()
 		} catch (err) {
-			console.error('Failed to sign in', err)
+			toast({
+				title: 'Sign Unsuccessful!',
+				description: 'Something went wrong. Please try again later.',
+				variant: 'destructive',
+			})
 		}
 	}
 
-	if (session) {
+	if (Session) {
 		router.push('/')
 	}
 

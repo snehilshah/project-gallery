@@ -13,22 +13,23 @@ export const options: NextAuthOptions = {
 			},
 			async authorize(credentials, req) {
 				if (!credentials || !credentials.email || !credentials.password)
-					return null
+					throw new Error('Please Provide Email and Password')
 
 				const [results, _] = (await db.execute(
 					'SELECT * FROM `users` WHERE email = ?',
 					[credentials.email]
 				)) as any[]
 
-				if (results.length === 0) return null
+				if (results.length === 0) throw new Error('User not Found')
 
 				const passwordcompare = await bcrypt.compare(
 					credentials.password,
 					results[0].password
 				)
 
-				if (!passwordcompare) return null
-				
+				if (!passwordcompare)
+					throw new Error('Email ID or Password is Incorrect')
+
 				return results[0]
 			},
 		}),
