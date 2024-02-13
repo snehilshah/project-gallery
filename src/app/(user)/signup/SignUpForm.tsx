@@ -21,11 +21,15 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
+import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SignalIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function SignUpForm() {
+	const router = useRouter()
+	const { toast } = useToast()
 	const form = useForm<z.infer<typeof UserSchema>>({
 		resolver: zodResolver(UserSchema),
 		defaultValues: {
@@ -34,7 +38,7 @@ export default function SignUpForm() {
 			password: '',
 			confirmPassword: '',
 		},
-		mode: 'onTouched',
+		mode: 'onChange',
 	})
 
 	async function onSubmit(data: z.infer<typeof UserSchema>) {
@@ -45,7 +49,23 @@ export default function SignUpForm() {
 			},
 			body: JSON.stringify(data),
 		})
-		console.log('This is response', await response.json())
+		const { message } = await response.json()
+		console.log('Message', message)
+		if (response.status != 201) {
+			toast({
+				title: 'Sign Up Failed!',
+				description: message,
+				variant: 'destructive',
+			})
+		}
+
+		if (response.status === 201) {
+			toast({
+				title: 'Sign Up Successful!',
+				description: 'Please check your email to verify your account',
+			})
+			router.push('/signin')
+		}
 	}
 
 	return (
@@ -68,7 +88,11 @@ export default function SignUpForm() {
 									<FormItem>
 										<FormLabel>Username</FormLabel>
 										<FormControl>
-											<Input type="text" placeholder="Unique Name across Project Gallery" {...field} />
+											<Input
+												type="text"
+												placeholder="Unique Name across Project Gallery"
+												{...field}
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>

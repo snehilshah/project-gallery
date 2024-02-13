@@ -21,18 +21,32 @@ export async function POST(req: NextRequest) {
 
 	// Check if user already exists
 	const [userList, fields] = (await db.execute(
-		'SELECT `email` FROM `users` WHERE email = ?',
-		[body.email]
+		'SELECT `user_name`, `email` FROM `users` WHERE email = ? || user_name = ?',
+		[body.email, body.username]
 	)) as any[]
+
+	console.log('userList', userList)
+	console.log('Fields', fields)
 
 	// If multiple users with same email, return error
 	if (userList.length > 0) {
-		return NextResponse.json(
-			{ error: `User with email ${body.email} already exists` },
-			{
-				status: 400,
-			}
-		)
+		if (userList[0].email === body.email) {
+			return NextResponse.json(
+				{ message: `User with email ${body.email} already exists` },
+				{
+					status: 400,
+				}
+			)
+		}
+
+		if (userList[0].user_name === body.username) {
+			return NextResponse.json(
+				{ message: `Username ${body.username} already taken :(` },
+				{
+					status: 400,
+				}
+			)
+		}
 	}
 
 	// const salt = await bcrypt.genSalt()
@@ -45,13 +59,15 @@ export async function POST(req: NextRequest) {
 		)
 	} catch (err) {
 		return NextResponse.json({
-			error: 'Error creating user',
-			errormessage: err,
+			message: 'Error creating user',
 			status: 500,
 		})
 	}
 
-	return NextResponse.json('User Registered Successfully!')
+	return NextResponse.json(
+		{ message: 'User Registered Successfully!' },
+		{ status: 201 }
+	)
 }
 
 export async function GET(req: NextRequest) {
