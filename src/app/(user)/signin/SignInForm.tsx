@@ -44,16 +44,16 @@ export default function SignInForm() {
 
 	async function onSubmit(data: z.infer<typeof SignInSchema>) {
 		try {
-			const response = (await signIn('credentials', {
+			const response = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
 				redirect: false,
-			})) as Response
+			})
 
-			if (!response.ok) {
+			if (!response?.ok) {
 				toast({
 					title: 'Sign Unsuccessful!',
-					description: response.error,
+					description: response?.error,
 					variant: 'destructive',
 				})
 			} else {
@@ -62,9 +62,8 @@ export default function SignInForm() {
 					description: 'You have been signed in successfully.',
 				})
 			}
-			router.push('/')
-			router.refresh()
 		} catch (err) {
+			console.log('Error in Sign In', err)
 			toast({
 				title: 'Sign Unsuccessful!',
 				description: 'Something went wrong. Please try again later.',

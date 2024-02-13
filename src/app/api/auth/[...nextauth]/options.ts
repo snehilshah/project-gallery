@@ -30,7 +30,13 @@ export const options: NextAuthOptions = {
 				if (!passwordcompare)
 					throw new Error('Email ID or Password is Incorrect')
 
-				return results[0]
+				console.log('Authorize', results[0])
+				return {
+					user_name: results[0].user_name,
+					name: results[0].name,
+					email: results[0].email,
+					profile_image: results[0].profile_image,
+				} as any
 			},
 		}),
 	],
@@ -55,11 +61,11 @@ export const options: NextAuthOptions = {
 
 	callbacks: {
 		async jwt({ token, user, session }) {
-			console.log('JWT Callback', token, user, session)
+			// console.log('JWT Callback', token, user, session)
 			return token
 		},
 		async session({ session, user, token }) {
-			console.log('Session Callback', token, user, session)
+			// console.log('Session Callback', token, user, session)
 			return session
 		},
 	},

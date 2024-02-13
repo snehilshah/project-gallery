@@ -11,7 +11,7 @@ import { useSession, signOut } from 'next-auth/react'
 
 function LoginDropDown() {
 	const { data: session, status } = useSession()
-	console.log(session)
+	// console.log(""session)
 
 	return (
 		<DropdownMenu>
@@ -40,7 +40,7 @@ function LoginDropDown() {
 				)}
 
 				<DropdownMenuItem>
-					<Link href="/login">Login</Link>
+					<Link href="/login">Lmao</Link>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
