@@ -50,7 +50,6 @@ export default function SignUpForm() {
 			body: JSON.stringify(data),
 		})
 		const { message } = await response.json()
-		console.log('Message', message)
 		if (response.status != 201) {
 			toast({
 				title: 'Sign Up Failed!',

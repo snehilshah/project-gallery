@@ -19,21 +19,25 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
+import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useRouter } from 'next/navigation'
 type Props = {
 	token: string
 }
 type PasswordResetSchemaT = z.infer<typeof PasswordResetSchema>
 
 const PasswordChangeForm = ({ token }: Props) => {
+	const router = useRouter()
+	const { toast } = useToast()
 	const [success, setSuccess] = useState(false)
 
 	const form = useForm<PasswordResetSchemaT>({
 		resolver: zodResolver(PasswordResetSchema),
 		mode: 'onTouched',
 	})
-	
+
 	const onSubmit: SubmitHandler<PasswordResetSchemaT> = async (data) => {
 		console.log(data, token)
 		const response = await fetch('/api/forgotpassword', {
@@ -43,7 +47,23 @@ const PasswordChangeForm = ({ token }: Props) => {
 			},
 			body: JSON.stringify({ ...data, token }),
 		})
-		const res = await response.json()
+
+		const { message } = await response.json()
+		if (response.status != 201) {
+			toast({
+				title: 'Sign Up Failed!',
+				description: message,
+				variant: 'destructive',
+			})
+		}
+
+		if (response.status === 201) {
+			toast({
+				title: 'Password Reset Successful!',
+				description: message,
+			})
+			router.push('/signin')
+		}
 	}
 
 	return (

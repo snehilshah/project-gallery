@@ -21,9 +21,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 export default function ForgotPasswordForm() {
 	const { toast } = useToast()
+	const router = useRouter()
 
 	const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
 		resolver: zodResolver(ForgotPasswordSchema),
@@ -44,6 +46,7 @@ export default function ForgotPasswordForm() {
 			toast({
 				description: 'An email has been sent to you',
 			})
+			router.push('/')
 		} catch (error) {
 			console.log(error)
 			toast({
