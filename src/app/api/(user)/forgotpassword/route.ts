@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import db from '@/lib/db'
+import db from '@/db/db'
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'

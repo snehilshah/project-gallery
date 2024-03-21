@@ -1,4 +1,4 @@
-import db from '@/lib/db'
+import db from '@/db/db'
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'

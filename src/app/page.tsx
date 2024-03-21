@@ -1,7 +1,5 @@
 'use client'
 
-import { useToast } from '@/components/ui/use-toast'
-import { Button } from '@/components/ui/button'
 export default function Home() {
 	return (
 		<main className="bg-white">

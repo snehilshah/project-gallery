@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { UserSchema } from '@/lib/ZodSchema/UserSchema'
-import db from '@/lib/db'
+import db from '@/db/db'
 import bcrypt from 'bcrypt'
 
 interface body {
@@ -53,9 +53,9 @@ export async function POST(req: NextRequest) {
 	const hashedPassword = await bcrypt.hash(body.password, 10)
 
 	try {
-		const [results, fields] = await db.execute(
-			'INSERT INTO `users` (user_name, name, email, email_verified, password) VALUES (?, ?, ? , ?, ?)',
-			[body.username, body.name, body.email, 0, hashedPassword]
+		const [results, _] = await db.execute(
+			'INSERT INTO `users` (user_name, name, email, password) VALUES (?, ?, ? , ?)',
+			[body.username, body.name, body.email, hashedPassword]
 		)
 	} catch (err) {
 		return NextResponse.json({
