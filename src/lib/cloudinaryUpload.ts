@@ -1,4 +1,3 @@
-'use server'
 type Props = {
 	formData: FormData
 	fileType: string
@@ -35,7 +34,6 @@ export const upload = async ({ formData, fileType }: Props) => {
 		const imageData = await resposne.json()
 		return imageData.secure_url
 	} catch (error) {
-		console.error('Error uploading to cloudinary', error)
 		throw error
 	}
 }

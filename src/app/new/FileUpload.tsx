@@ -1,6 +1,5 @@
-import { upload } from '@/actions/cloudinaryUpload'
+import { upload } from '@/lib/cloudinaryUpload'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import {
 	Carousel,
 	CarouselContent,
@@ -88,36 +87,37 @@ export default function FileUpload() {
 			try {
 				const result = await upload({ formData, fileType })
 				resultArray.push({ url: result, fileType: fileType })
-				console.log('Result Array', resultArray)
 			} catch (err) {
-				console.log("Error Uploading", err)
+				console.log('Error Uploading', err)
 			}
 		}
 	}
 	return (
-		<div className="bg-blue-300 flex flex-col items-center">
-			<Card
+		<div className="flex flex-col items-center">
+			<div
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
-				className="w-[900px] mx-auto min-h-60 max-md:max-h-80 max-h-[600px] hover:border hover:border-neutral-500 border-dashed rounded-md border-gray-700 relative overflow-auto"
+				className="w-[900px] mx-auto min-h-[400px] max-h-[600px] rounded-md relative"
 			>
 				{fileUrls.length > 0 ? (
-					<Carousel className="w-full h-full">
-						<CarouselContent>
+					<Carousel className="w-[900px] h-[400px]">
+						<CarouselContent className="-ml-3">
 							{fileUrls.map((url, index) => (
-								<CarouselItem key={index} className="relative">
-									<img
-										src={url}
-										alt={files[index].name}
-										className="w-full h-full object-cover"
-									/>
-									<Button
-										onClick={() => deleteFile(index)}
-										className="absolute top-1 right-1 w-8 h-8 rounded-full bg-gray-700 cursor-pointer flex items-center justify-center p-3"
-									>
-										<X className="min-w-6 min-h-6 m-3" />
-									</Button>
-								</CarouselItem>
+								<div key={index} className="relative w-full h-[400px] mx-auto">
+									<CarouselItem className="relative w-[600px] h-full md:basis-1/2 lg:basis-1/3">
+										<img
+											src={url}
+											alt={files[index].name}
+											className="w-[600px] h-[400px] object-cover rounded-3xl"
+										/>
+										<Button
+											onClick={() => deleteFile(index)}
+											className="absolute top-1 right-1 w-8 h-8 rounded-full bg-gray-700 cursor-pointer flex items-center justify-center p-3"
+										>
+											<X className="min-w-6 min-h-6 m-3" />
+										</Button>
+									</CarouselItem>
+								</div>
 							))}
 						</CarouselContent>
 						<label
@@ -143,7 +143,7 @@ export default function FileUpload() {
 					// See: https://stackoverflow.com/questions/43589955/input-type-file-not-working-if-hidden
 					<label
 						htmlFor="image"
-						className="absolute top-0 left-0 bottom-0 right-0 cursor-pointer flex items-center justify-center flex-col bg-red-300"
+						className="absolute top-0 left-0 bottom-0 right-0 cursor-pointer flex items-center justify-center flex-col"
 					>
 						<UploadCloudIcon className="text-3xl opacity-70" />
 						<span className="block">Click or Drag your Files</span>
@@ -158,7 +158,7 @@ export default function FileUpload() {
 						/>
 					</label>
 				)}
-			</Card>
+			</div>
 			<Button className="my-2 w-60 mx-auto" onClick={CreatePost}>
 				Submit
 			</Button>
