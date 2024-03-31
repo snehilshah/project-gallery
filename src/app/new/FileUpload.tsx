@@ -84,12 +84,13 @@ export default function FileUpload() {
 		for (let i = 0; i < files.length; i++) {
 			formData.append('file', files[i])
 			const fileType = files[i].type
-
+			console.log('Form Data', formData)
 			try {
 				const result = await upload({ formData, fileType })
 				resultArray.push({ url: result, fileType: fileType })
+				console.log('Result Array', resultArray)
 			} catch (err) {
-				console.log(err)
+				console.log("Error Uploading", err)
 			}
 		}
 	}
