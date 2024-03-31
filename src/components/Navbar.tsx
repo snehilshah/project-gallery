@@ -11,10 +11,10 @@ export default function Navbar() {
 			<Link href={'/'}>
 				<Image
 					className="mx-4"
-					src="/star-svg.svg"
-					alt="project gallery logo"
+					src="/star-svgrepo-com.svg"
+					alt="Project Gallery Logo"
 					width={60}
-					height={5}
+					height={60}
 				/>
 			</Link>
 			<div className="flex items-center py-4 gap-10 justify-around w-full">
