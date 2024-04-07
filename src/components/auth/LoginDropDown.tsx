@@ -22,9 +22,14 @@ function LoginDropDown() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				{status === 'unauthenticated' && (
-					<DropdownMenuItem>
-						<Link href="/signin">Login</Link>
-					</DropdownMenuItem>
+					<>
+						<DropdownMenuItem>
+							<Link href="/signin">SignIn</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href="/signup">SignUp</Link>
+						</DropdownMenuItem>
+					</>
 				)}
 				{status === 'authenticated' && (
 					<>
@@ -38,10 +43,6 @@ function LoginDropDown() {
 						</DropdownMenuItem>
 					</>
 				)}
-
-				<DropdownMenuItem>
-					<Link href="/login">Lmao</Link>
-				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
