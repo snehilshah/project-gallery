@@ -93,11 +93,11 @@ export default function FileUpload() {
 		}
 	}
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col items-center bg-fuchsia-400 w-[60%] rounded-3xl mx-auto">
 			<div
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
-				className="w-[900px] mx-auto min-h-[400px] max-h-[600px] rounded-md relative"
+				className="w-full mx-auto min-h-[400px] max-h-[600px] rounded-md relative"
 			>
 				{fileUrls.length > 0 ? (
 					<Carousel className="w-[900px] h-[400px]">
@@ -147,7 +147,7 @@ export default function FileUpload() {
 					>
 						<UploadCloudIcon className="text-3xl opacity-70" />
 						<span className="block">Click or Drag your Files</span>
-						<span className="block">Maximum File Size 2mb</span>
+						<span className="block">Maximum File Size <u>2MB</u></span>
 						<input
 							multiple
 							onChange={handleFileChange}

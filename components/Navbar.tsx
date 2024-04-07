@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function Navbar() {
 	return (
-		<div className="mx-auto flex">
+		<div className="mx-auto flex mb-6">
 			<Link href={'/'}>
 				<Image
 					className="mx-4"
