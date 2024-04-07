@@ -24,7 +24,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className={abeezee.className}>
 				<Provider>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
