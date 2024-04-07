@@ -28,10 +28,18 @@ import { Input } from '@/components/ui/input'
 import { SignalIcon } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { Response } from 'next-auth'
+import { useEffect } from 'react'
 
 export default function SignInForm() {
-	const { data: Session } = useSession()
+	// In case user is already logged in, redirect to home page
 	const router = useRouter()
+	const { data: Session } = useSession()
+	useEffect(() => {
+		if (Session) {
+			router.push('/')
+		}
+	}, [Session, router])
+	
 	const { toast } = useToast()
 	const form = useForm<z.infer<typeof SignInSchema>>({
 		resolver: zodResolver(SignInSchema),
@@ -72,10 +80,6 @@ export default function SignInForm() {
 		}
 	}
 
-	if (Session) {
-		router.push('/')
-	}
-
 	return (
 		<section className="mt-4 max-w-lg mx-auto">
 			<Card className="mx-auto max-w-lg shadow-[0px_0px_50px_2px_rgb(0,0,0,0.2)]">
@@ -96,7 +100,12 @@ export default function SignInForm() {
 									<FormItem>
 										<FormLabel>Email</FormLabel>
 										<FormControl>
-											<Input type="email" placeholder="Email" {...field} />
+											<Input
+												type="email"
+												autoComplete="username"
+												placeholder="Email"
+												{...field}
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -111,6 +120,7 @@ export default function SignInForm() {
 										<FormControl>
 											<Input
 												type="password"
+												autoComplete="current-password"
 												placeholder="Password"
 												{...field}
 											/>
