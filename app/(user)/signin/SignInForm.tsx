@@ -27,20 +27,23 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SignalIcon } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
-import { Response } from 'next-auth'
 import { useEffect } from 'react'
 
 export default function SignInForm() {
 	// In case user is already logged in, redirect to home page
 	const router = useRouter()
 	const { data: Session } = useSession()
+	const { toast } = useToast()
 	useEffect(() => {
 		if (Session) {
 			router.push('/')
 		}
-	}, [Session, router])
-	
-	const { toast } = useToast()
+		toast({
+			title: 'You are already signed in!',
+			variant: 'success',
+		})
+	}, [Session, router, toast])
+
 	const form = useForm<z.infer<typeof SignInSchema>>({
 		resolver: zodResolver(SignInSchema),
 		defaultValues: {
@@ -68,6 +71,7 @@ export default function SignInForm() {
 				toast({
 					title: 'Sign Successful!',
 					description: 'You have been signed in successfully.',
+					variant: 'success',
 				})
 			}
 		} catch (err) {
