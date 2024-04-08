@@ -8,7 +8,7 @@ export default function Home() {
 		<main className="bg-white">
 			<div className='flex flex-col items-center gap-6 mb-32'>
 				<h1>This Better?</h1>
-				<div className="w-1/3">
+				<div className="w-[90%] md:w-1/3">
 					<FancyMultiSelect />
 				</div>
 				<h1>Or this?</h1>
