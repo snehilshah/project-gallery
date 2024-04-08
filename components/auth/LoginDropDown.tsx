@@ -33,11 +33,16 @@ function LoginDropDown() {
 				)}
 				{status === 'authenticated' && (
 					<>
+						<Link href="/new">
+							<DropdownMenuItem>
+								<p className="text-teal-400">New</p>
+							</DropdownMenuItem>
+						</Link>
 						<DropdownMenuItem>
 							<p>{session.user?.name}</p>
 						</DropdownMenuItem>
-						<DropdownMenuItem>
-							<p className="text-red-400" onClick={() => signOut()}>
+						<DropdownMenuItem onClick={() => signOut()}>
+							<p className="text-red-400">
 								Sign Out
 							</p>
 						</DropdownMenuItem>
