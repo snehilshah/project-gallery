@@ -32,3 +32,5 @@ Custom variant for success toast has been introduced in shadcn
 ## Issues
 
 - File upload panel height changes when image with different dimensions is uploaded? can we make it fixed
+
+- Add css for dark theme

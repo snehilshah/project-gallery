@@ -27,7 +27,7 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body className={abeezee.className}>
 				<Provider>
-					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					<ThemeProvider attribute="class" defaultTheme="light" enableSystem>
 						<Navbar />
 						{children}
 					</ThemeProvider>
