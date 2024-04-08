@@ -20,3 +20,15 @@ Project Gallery is a community platform where developers can get inspiration for
 <!-- APIS I used -->
 
 <!-- https://dev.to/yuridevat/how-to-create-a-good-readmemd-file-4pa2 -->
+
+## Details
+
+Custom variant for success toast has been introduced in shadcn
+
+## Errors/Bugs
+
+- You are already signed in toast pops up when /signin page is reloaded even though user is not logged in
+
+## Issues
+
+- File upload panel height changes when image with different dimensions is uploaded? can we make it fixed
