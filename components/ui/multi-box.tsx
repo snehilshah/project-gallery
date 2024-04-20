@@ -80,14 +80,16 @@ const FRAMEWORKS = [
 		value: 'wordpress',
 		label: 'WordPress',
 		color: '#8b5cf6',
-	},
+	}
 ] satisfies Framework[]
 
-const badgeStyle = (color: string) => ({
-	borderColor: `${color}20`,
-	backgroundColor: `${color}30`,
-	color,
-})
+const badgeStyle = (color: string) => {
+	return {
+		borderColor: `${color}20`,
+		backgroundColor: `${color}30`,
+		color,
+	}
+}
 
 export function FancyBox() {
 	const inputRef = React.useRef<HTMLInputElement>(null)
@@ -103,7 +105,7 @@ export function FancyBox() {
 		const newFramework = {
 			value: name.toLowerCase(),
 			label: name,
-			color: '#ffffff',
+			color: '#000',
 		}
 		setFrameworks((prev) => [...prev, newFramework])
 		setSelectedValues((prev) => [...prev, newFramework])
