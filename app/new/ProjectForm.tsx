@@ -1,11 +1,13 @@
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { Sun } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ProjectSchema } from '@/lib/ZodSchema/ProjectSchema'
-import { FancyMultiSelect } from '@/components/ui/multi-select'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import FileUpload from './FileUpload'
 export default function ProjectForm() {
-  
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: {
@@ -15,8 +17,21 @@ export default function ProjectForm() {
 		mode: 'onTouched',
 	})
 	return (
-		<form action="">
-			<Input placeholder="Enter project name" />
+		<form action="" className="flex flex-col gap-4 p-4">
+			<Input placeholder="Project Title" />
+			<div className="grid w-full gap-1.5">
+				<Label htmlFor="message">
+					Description <span className="text-gray-400">(optional)</span>
+				</Label>
+				<Textarea
+					placeholder="Type your message here."
+					id="message"
+					maxLength={255}
+				/>
+			</div>
+			<FileUpload />
+			
+			<Input placeholder="Source Code" />
 		</form>
 	)
 }

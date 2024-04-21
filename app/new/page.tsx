@@ -2,8 +2,9 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import FileUpload from './FileUpload'
-import { Separator } from "@/components/ui/separator"
+import { Separator } from '@/components/ui/separator'
 import ProjectForm from './ProjectForm'
+import { FancyBox } from '@/components/ui/multi-box'
 
 export default function AddProject() {
 	const router = useRouter()
@@ -12,13 +13,14 @@ export default function AddProject() {
 		router.push('/')
 	}
 	return (
-		<section className='w-2/3 mx-auto p-2'>
-			<h1 className='font-semibold text-xl'>Create a new Project</h1>
-			<p className='text-sm text-muted-foreground'>Add a project to you profile</p>
+		<section className="w-2/3 mx-auto p-2">
+			<h1 className="font-semibold text-xl">Create a new Project</h1>
+			<p className="text-sm text-muted-foreground">
+				Add a project to you profile
+			</p>
 			<Separator />
-			
 			<ProjectForm />
-			<FileUpload />
+			<FancyBox />
 			<Button onClick={handleProjectSubmission}>Submit Project</Button>
 		</section>
 	)

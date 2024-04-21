@@ -99,7 +99,7 @@ export default function FileUpload() {
 			<div
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
-				className="w-[900px] h-[400px] mx-auto min-h-[400px] max-h-[600px] rounded-md relative outline-black outline-dotted hover:outline"
+				className="w-[900px] h-[400px] mx-auto min-h-[400px] max-h-[600px] rounded-xl relative outline-black outline-dotted hover:outline"
 			>
 				{fileUrls.length > 0 ? (
 					<Carousel className="w-full h-full">
@@ -109,9 +109,7 @@ export default function FileUpload() {
 									<img
 										src={url}
 										alt={files[index].name}
-										// height={400}
-										// width={900}
-										className="rounded-3xl object-cover w-full h-full"
+										className="rounded-xl object-cover w-full h-full"
 									/>
 									<Button
 										onClick={() => deleteFile(index)}
