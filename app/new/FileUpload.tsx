@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/carousel'
 import { Plus, UploadCloudIcon, X } from 'lucide-react'
 import { useState } from 'react'
+import { Card } from '@/components/ui/card'
+import Image from 'next/image'
 export default function FileUpload() {
 	const [files, setFiles] = useState<File[]>([])
 	const [fileUrls, setFileUrls] = useState<string[]>([])
@@ -93,31 +95,31 @@ export default function FileUpload() {
 		}
 	}
 	return (
-		<div className="flex flex-col items-center bg-fuchsia-400 w-[60%] rounded-3xl mx-auto">
+		<div className="flex flex-col items-center w-full mx-auto">
 			<div
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
-				className="w-full mx-auto min-h-[400px] max-h-[600px] rounded-md relative"
+				className="w-[900px] h-[400px] mx-auto min-h-[400px] max-h-[600px] rounded-md relative outline-black outline-dotted hover:outline"
 			>
 				{fileUrls.length > 0 ? (
-					<Carousel className="w-[900px] h-[400px]">
-						<CarouselContent className="-ml-3">
+					<Carousel className="w-full h-full">
+						<CarouselContent>
 							{fileUrls.map((url, index) => (
-								<div key={index} className="relative w-full h-[400px] mx-auto">
-									<CarouselItem className="relative w-[600px] h-full md:basis-1/2 lg:basis-1/3">
-										<img
-											src={url}
-											alt={files[index].name}
-											className="w-[600px] h-[400px] object-cover rounded-3xl"
-										/>
-										<Button
-											onClick={() => deleteFile(index)}
-											className="absolute top-1 right-1 w-8 h-8 rounded-full bg-gray-700 cursor-pointer flex items-center justify-center p-3"
-										>
-											<X className="min-w-6 min-h-6 m-3" />
-										</Button>
-									</CarouselItem>
-								</div>
+								<CarouselItem key={index} className="relative w-[900px] h-[400px]">
+									<img
+										src={url}
+										alt={files[index].name}
+										// height={400}
+										// width={900}
+										className="rounded-3xl object-cover w-full h-full"
+									/>
+									<Button
+										onClick={() => deleteFile(index)}
+										className="absolute top-1 right-1 w-8 h-8 rounded-full bg-gray-700 cursor-pointer flex items-center justify-center p-3"
+									>
+										<X className="min-w-6 min-h-6 m-3" />
+									</Button>
+								</CarouselItem>
 							))}
 						</CarouselContent>
 						<label
@@ -147,7 +149,9 @@ export default function FileUpload() {
 					>
 						<UploadCloudIcon className="text-3xl opacity-70" />
 						<span className="block">Click or Drag your Files</span>
-						<span className="block">Maximum File Size <u>2MB</u></span>
+						<span className="block">
+							Maximum File Size <u>2MB</u>
+						</span>
 						<input
 							multiple
 							onChange={handleFileChange}
