@@ -41,7 +41,7 @@ export const options: NextAuthOptions = {
 		}),
 	],
 
-	debug: true,
+	// debug: true,
 
 	theme: {
 		colorScheme: 'auto',
