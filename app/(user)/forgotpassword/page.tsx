@@ -1,9 +1,7 @@
-import ForgotPasswordForm from "./ForgotPasswordForm"
+import ForgotPasswordForm from './ForgotPasswordForm';
 
 function ForgotPassword() {
-  return (
-    <ForgotPasswordForm />
-  )
+  return <ForgotPasswordForm />;
 }
 
-export default ForgotPassword
+export default ForgotPassword;

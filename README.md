@@ -4,13 +4,12 @@
 
 Project Gallery is a community platform where developers can get inspiration for projects. Users can showcase their projects. The ultimate goal is make project gallery the **Front-End for GitHub**.
 
-
-
 <!-- Why did you develop it, what was your motivation? -->
 <!-- What problem does it solve? -->
 <!-- What makes your project stand out? -->
 
 ## What have I Used?
+
 <!-- ## Tech Stack -->
 
 - Next.js

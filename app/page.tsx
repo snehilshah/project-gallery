@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { FancyBox } from '@/components/ui/multi-box'
+import { FancyBox } from '@/components/ui/multi-box';
 
 export default function Home() {
-	return (
-		<main className="bg-white">
-			<h1 className="text-8xl text-center uppercase">Project Of The Day</h1>
-		</main>
-	)
+  return (
+    <main className="bg-white">
+      <h1 className="text-center text-8xl uppercase">Project Of The Day</h1>
+    </main>
+  );
 }

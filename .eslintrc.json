@@ -1,7 +1,7 @@
 {
-	"extends": "next/core-web-vitals",
-	"rules": {
-		// "no-console": "warn",
-		"@next/next/no-img-element": "off"
-	}
+  "extends": "prettier",
+  "rules": {
+    // "no-console": "warn",
+    "@next/next/no-img-element": "off"
+  }
 }

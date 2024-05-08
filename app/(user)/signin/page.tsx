@@ -1,12 +1,11 @@
-import SignInForm from "./SignInForm"
-
+import SignInForm from './SignInForm';
 
 function Signin() {
   return (
     <div>
       <SignInForm />
     </div>
-  )
+  );
 }
 
-export default Signin
+export default Signin;

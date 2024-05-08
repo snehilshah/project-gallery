@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 type NameProps = {
-	name: string
-}
+  name: string;
+};
 
 const Name = ({ name }: NameProps) => {
-	return (
-		<div>
-			<h1>{name}</h1>
-		</div>
-	)
-}
+  return (
+    <div>
+      <h1>{name}</h1>
+    </div>
+  );
+};
 
-export default Name
+export default Name;
