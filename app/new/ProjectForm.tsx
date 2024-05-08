@@ -1,13 +1,18 @@
+'use client'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Sun } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ProjectSchema } from '@/lib/ZodSchema/ProjectSchema'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import FileUpload from './FileUpload'
+import { FancyBox } from '@/components/ui/multi-box'
+import { Button } from '@/components/ui/button'
 export default function ProjectForm() {
+	function handleProjectSubmission() {
+		console.log('Submitting Project')
+	}
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: {
@@ -30,8 +35,11 @@ export default function ProjectForm() {
 				/>
 			</div>
 			<FileUpload />
-			
-			<Input placeholder="Source Code" />
+
+			<Input placeholder="Source Code Link" />
+			<FancyBox />
+			<Input placeholder="Collaborators" />
+			<Button onClick={handleProjectSubmission}>Submit Project</Button>
 		</form>
 	)
 }

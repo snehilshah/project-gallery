@@ -1,17 +1,8 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-import FileUpload from './FileUpload'
-import { Separator } from '@/components/ui/separator'
 import ProjectForm from './ProjectForm'
-import { FancyBox } from '@/components/ui/multi-box'
+
+import { Separator } from '@/components/ui/separator'
 
 export default function AddProject() {
-	const router = useRouter()
-	const handleProjectSubmission = () => {
-		console.log('Project Submitted')
-		router.push('/')
-	}
 	return (
 		<section className="w-2/3 mx-auto p-2">
 			<h1 className="font-semibold text-xl">Create a new Project</h1>
@@ -20,8 +11,6 @@ export default function AddProject() {
 			</p>
 			<Separator />
 			<ProjectForm />
-			<FancyBox />
-			<Button onClick={handleProjectSubmission}>Submit Project</Button>
 		</section>
 	)
 }

@@ -80,7 +80,7 @@ const FRAMEWORKS = [
 		value: 'wordpress',
 		label: 'WordPress',
 		color: '#8b5cf6',
-	}
+	},
 ] satisfies Framework[]
 
 const badgeStyle = (color: string) => {
@@ -140,14 +140,14 @@ export function FancyBox() {
 	}
 
 	return (
-		<div className="max-w-[200px]">
+		<div className="mb-12">
 			<Popover open={openCombobox} onOpenChange={onComboboxOpenChange}>
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
 						role="combobox"
 						aria-expanded={openCombobox}
-						className="w-[200px] justify-between text-foreground"
+						className="w-full justify-between text-foreground"
 					>
 						<span className="truncate">
 							{selectedValues.length === 0 && 'Select labels'}
@@ -155,6 +155,8 @@ export function FancyBox() {
 							{selectedValues.length === 2 &&
 								selectedValues.map(({ label }) => label).join(', ')}
 							{selectedValues.length > 2 &&
+								selectedValues.map(({ label }) => label).join(', ')}
+							{selectedValues.length > 7 &&
 								`${selectedValues.length} labels selected`}
 						</span>
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -259,7 +261,7 @@ export function FancyBox() {
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
-			<div className="relative mt-3 h-24 -mb-24 overflow-y-auto">
+			<div className="relative mt-3 h-14 -mb-12 overflow-y-auto">
 				{selectedValues.map(({ label, value, color }) => (
 					<Badge
 						key={value}
