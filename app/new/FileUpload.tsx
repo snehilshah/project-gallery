@@ -9,15 +9,14 @@ import {
 } from '@/components/ui/carousel'
 import { Plus, UploadCloudIcon, X } from 'lucide-react'
 import { useState } from 'react'
-import { Card } from '@/components/ui/card'
-import Image from 'next/image'
+
 export default function FileUpload() {
 	const [files, setFiles] = useState<File[]>([])
 	const [fileUrls, setFileUrls] = useState<string[]>([])
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedFiles = event.target.files
-
+		console.log('Selected Files', selectedFiles)
 		if (selectedFiles) {
 			const newFiles: File[] = Array.from(selectedFiles)
 
@@ -39,6 +38,7 @@ export default function FileUpload() {
 	}
 
 	const handleDrop = (event: React.DragEvent) => {
+		console.log('Dropped')
 		event.preventDefault()
 		const droppedFiles = event.dataTransfer.files
 
@@ -63,10 +63,12 @@ export default function FileUpload() {
 	}
 
 	const handleDragOver = (event: React.DragEvent) => {
+		console.log('Dragging')
 		event.preventDefault()
 	}
 
 	const deleteFile = (index: number) => {
+		console.log('Deleting', index)
 		const updatedFiles = [...files]
 		updatedFiles.splice(index, 1)
 
@@ -78,6 +80,7 @@ export default function FileUpload() {
 	}
 
 	const CreatePost = async () => {
+		console.log('Creating Post')
 		const formData = new FormData()
 
 		const resultArray = []
@@ -105,13 +108,17 @@ export default function FileUpload() {
 					<Carousel className="w-full h-full">
 						<CarouselContent>
 							{fileUrls.map((url, index) => (
-								<CarouselItem key={index} className="relative w-[900px] h-[400px]">
+								<CarouselItem
+									key={index}
+									className="relative w-[900px] h-[400px]"
+								>
 									<img
 										src={url}
 										alt={files[index].name}
 										className="rounded-xl object-cover w-full h-full"
 									/>
 									<Button
+										type="button" // shadcn button submits form by default, so we need to specify type as button
 										onClick={() => deleteFile(index)}
 										className="absolute top-1 right-1 w-8 h-8 rounded-full bg-gray-700 cursor-pointer flex items-center justify-center p-3"
 									>
@@ -135,8 +142,8 @@ export default function FileUpload() {
 								className="hidden"
 							/>
 						</label>
-						<CarouselPrevious className="left-0" />
-						<CarouselNext className="right-0" />
+						<CarouselPrevious className="left-0 z-50" />
+						<CarouselNext className="right-0 z-50" />
 					</Carousel>
 				) : (
 					// Keep the htmlFor and id the same for the input and label to make the input work even if the input is hidden
@@ -162,7 +169,7 @@ export default function FileUpload() {
 				)}
 			</div>
 			<Button className="my-2 w-60 mx-auto" onClick={CreatePost}>
-				Submit
+				Upload
 			</Button>
 		</div>
 	)
