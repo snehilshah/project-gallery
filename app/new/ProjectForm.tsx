@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import FileUpload from './FileUpload';
 import { FancyBox } from '@/components/ui/multi-box';
 import { Button } from '@/components/ui/button';
+import Autocomplete from '@/components/Autocomplete';
+import { useCallback } from 'react';
 export default function ProjectForm() {
   function handleProjectSubmission() {
     console.log('Submitting Project');
@@ -38,7 +40,13 @@ export default function ProjectForm() {
 
       <Input placeholder="Source Code Link" />
       <FancyBox />
-      <Input placeholder="Collaborators" />
+      <Autocomplete
+        callback={useCallback(async (query: string) => {
+          console.log('Query:', query);
+          const res = await fetch(`/api/user?q=${query}`);
+          return await res.json();
+        }, [])}
+      />
       <Button onClick={handleProjectSubmission}>Submit Project</Button>
     </form>
   );
