@@ -5,11 +5,10 @@ import { SignInSchema } from '@/lib/ZodSchema/UserSchema';
 import { useForm } from 'react-hook-form';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+// import bcrypt from 'bcrypt';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,13 +18,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { SignalIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useEffect } from 'react';
 
@@ -37,12 +34,12 @@ export default function SignInForm() {
   useEffect(() => {
     if (Session) {
       router.push('/');
+      toast({
+        title: 'You are already signed in!',
+        variant: 'success',
+      });
     }
-    toast({
-      title: 'You are already signed in!',
-      variant: 'success',
-    });
-  }, [Session, router, toast]);
+  }, []);
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -55,6 +52,7 @@ export default function SignInForm() {
 
   async function onSubmit(data: z.infer<typeof SignInSchema>) {
     try {
+      // let hashedPassword = await bcrypt.hash(data.password, 10);
       const response = await signIn('credentials', {
         email: data.email,
         password: data.password,
@@ -73,6 +71,8 @@ export default function SignInForm() {
           description: 'You have been signed in successfully.',
           variant: 'success',
         });
+        router.refresh();
+        router.push('/');
       }
     } catch (err) {
       console.log('Error in Sign In', err);
@@ -137,14 +137,6 @@ export default function SignInForm() {
               <Button type="submit">Sign In</Button>
             </form>
           </Form>
-          <div className="divider my-6 h-1"></div>
-          <div className="mx-10 inline text-sm text-gray-400">
-            Already have an account?{' '}
-            <SignalIcon className="inline text-gray-800" />{' '}
-            <Link className="text-blue-400 hover:underline" href={'/login'}>
-              Log In
-            </Link>
-          </div>
         </CardContent>
       </Card>
     </section>

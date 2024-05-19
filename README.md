@@ -1,3 +1,7 @@
+# TODO: Make seperate env for dev and prod
+# TODO: Hash the password before sending it to the server?
+
+
 # Project Gallery
 
 ## The Front-End for GitHub

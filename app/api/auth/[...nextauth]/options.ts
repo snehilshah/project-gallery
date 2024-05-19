@@ -41,7 +41,7 @@ export const options: NextAuthOptions = {
     }),
   ],
 
-  // debug: true,
+  debug: true,
 
   theme: {
     colorScheme: 'auto',
@@ -61,11 +61,11 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user, session }) {
-      // console.log('JWT Callback', token, user, session)
+      console.log('JWT Callback', token, user, session);
       return token;
     },
     async session({ session, user, token }) {
-      // console.log('Session Callback', token, user, session)
+      console.log('Session Callback', token, user, session);
       return session;
     },
   },
