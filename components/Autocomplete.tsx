@@ -9,25 +9,23 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 
-type params = {
-  callback: any;
-};
-
-function Autocomplete({ callback }: params) {
+function Autocomplete() {
   const [query, setQuery] = useState('');
-  useEffect(() => {
-    callback(query).then((res: any) => {
-      console.log(res);
-    });
-  }, [query, callback]);
-  
-  
-  
   const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch(`/api/user?q=${query}`);
+      const test = await res.json();
+      setData(test);
+    };
+    if (query.length >= 3) fetchUsers();
+  }, [query]);
+
   function filterData(data: any) {
     return data.filter((user: any) => {
       return (
-        user.username.toLowerCase().includes(query.toLowerCase()) ||
+        user.user_name.toLowerCase().includes(query.toLowerCase()) ||
         user.name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase())
       );
@@ -52,10 +50,10 @@ function Autocomplete({ callback }: params) {
           <CommandSeparator />
           {filterData(data).map((user: any) => {
             return (
-              <CommandItem key={user.id}>
+              <CommandItem key={user.user_id}>
                 <div className="flex w-full justify-between">
                   <span className="w-56 text-black">{user.name}</span>
-                  <span className="w-56 text-gray-400">{user.username}</span>
+                  <span className="w-56 text-gray-400">{user.user_name}</span>
                   <span className="w-56 text-blue-300">{user.email}</span>
                 </div>
               </CommandItem>

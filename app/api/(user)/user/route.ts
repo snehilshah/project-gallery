@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const query = serchParams.get('q')?.toLowerCase();
 
   const [results, _] = await db.execute(
-    'SELECT user_name, name, email  FROM `users` where email like ? or user_name like ? or name like ?;',
+    'SELECT user_id, user_name, name, email  FROM `users` where email like ? or user_name like ? or name like ?;',
     ['%' + query + '%', '%' + query + '%', '%' + query + '%']
   );
 

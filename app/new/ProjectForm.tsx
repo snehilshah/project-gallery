@@ -40,13 +40,7 @@ export default function ProjectForm() {
 
       <Input placeholder="Source Code Link" />
       <FancyBox />
-      <Autocomplete
-        callback={useCallback(async (query: string) => {
-          console.log('Query:', query);
-          const res = await fetch(`/api/user?q=${query}`);
-          return await res.json();
-        }, [])}
-      />
+      <Autocomplete />
       <Button onClick={handleProjectSubmission}>Submit Project</Button>
     </form>
   );
