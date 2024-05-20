@@ -30,7 +30,6 @@ export const options: NextAuthOptions = {
         if (!passwordcompare)
           throw new Error('Email ID or Password is Incorrect');
 
-        console.log('Authorize', results[0]);
         return {
           user_name: results[0].user_name,
           name: results[0].name,
@@ -41,7 +40,7 @@ export const options: NextAuthOptions = {
     }),
   ],
 
-  debug: true,
+  debug: false,
 
   theme: {
     colorScheme: 'auto',

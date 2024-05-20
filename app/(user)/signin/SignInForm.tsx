@@ -58,7 +58,9 @@ export default function SignInForm() {
         password: data.password,
         redirect: false,
       });
-
+      
+      console.log('Response on client for signin', response)
+      
       if (!response?.ok) {
         toast({
           title: 'Sign Unsuccessful!',
