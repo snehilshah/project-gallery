@@ -1,3 +1,4 @@
+export const maxDuration = 30;
 import db from '@/db/db';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
