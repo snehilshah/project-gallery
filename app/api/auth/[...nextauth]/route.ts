@@ -1,3 +1,4 @@
+export const maxDuration = 30;
 import NextAuth from 'next-auth';
 import { options } from './options';
 

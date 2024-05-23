@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { UserSchema } from '@/lib/ZodSchema/UserSchema';
 import db from '@/db/db';
@@ -20,10 +21,12 @@ export async function POST(req: NextRequest) {
   }
 
   // Check if user already exists
+  console.log('Requesting DB');
   const [userList, fields] = (await db.execute(
     'SELECT `user_name`, `email` FROM `users` WHERE email = ? || user_name = ?',
     [body.email, body.username]
   )) as any[];
+  console.log('DB recieved');
 
   console.log('userList', userList);
   console.log('Fields', fields);
@@ -48,10 +51,12 @@ export async function POST(req: NextRequest) {
       );
     }
   }
+  console.log('starting hash');
 
   // const salt = await bcrypt.genSalt()
   const hashedPassword = await bcrypt.hash(body.password, 10);
 
+  console.log('hash done');
   try {
     const [results, _] = await db.execute(
       'INSERT INTO `users` (user_name, name, email, password) VALUES (?, ?, ? , ?)',
@@ -64,6 +69,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  console.log('DB insertion done');
   return NextResponse.json(
     { message: 'User Registered Successfully!' },
     { status: 201 }

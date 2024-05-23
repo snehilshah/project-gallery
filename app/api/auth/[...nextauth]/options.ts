@@ -1,3 +1,4 @@
+export const maxDuration = 30;
 import db from '@/db/db';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -12,6 +13,7 @@ export const options: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
+        console.log('initializeing auth')
         if (!credentials || !credentials.email || !credentials.password)
           throw new Error('Please Provide Email and Password');
 
@@ -19,18 +21,21 @@ export const options: NextAuthOptions = {
           'SELECT * FROM `users` WHERE email = ?',
           [credentials.email]
         )) as any[];
+        console.log('database respponsse success')
 
         if (results.length === 0) throw new Error('User not Found');
 
+        console.log('user found in database')
         const passwordcompare = await bcrypt.compare(
           credentials.password,
           results[0].password
         );
 
+        console.log('password matched')
         if (!passwordcompare)
           throw new Error('Email ID or Password is Incorrect');
-
-        console.log('Authorize', results[0]);
+        console.log('user found in database')
+        
         return {
           user_name: results[0].user_name,
           name: results[0].name,
@@ -41,7 +46,7 @@ export const options: NextAuthOptions = {
     }),
   ],
 
-  // debug: true,
+  debug: false,
 
   theme: {
     colorScheme: 'auto',
@@ -61,11 +66,11 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user, session }) {
-      // console.log('JWT Callback', token, user, session)
+      // console.log('JWT Callback', token, user, session);
       return token;
     },
     async session({ session, user, token }) {
-      // console.log('Session Callback', token, user, session)
+      // console.log('Session Callback', token, user, session);
       return session;
     },
   },
