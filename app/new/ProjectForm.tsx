@@ -7,7 +7,7 @@ import { ProjectSchema } from '@/lib/ZodSchema/ProjectSchema';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import FileUpload from './FileUpload';
-import { FancyBox } from '@/components/ui/multi-box';
+import { FancyBox } from '@/components/ui/fancy-box';
 import { Button } from '@/components/ui/button';
 import Autocomplete from '@/components/Autocomplete';
 import { useCallback } from 'react';
