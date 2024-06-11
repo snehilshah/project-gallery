@@ -1,7 +1,5 @@
 'use client';
 
-import { FancyBox } from '@/components/ui/multi-box';
-
 export default function Home() {
   return (
     <main className="bg-white">
