@@ -10,8 +10,12 @@ import FileUpload from './FileUpload';
 import { FancyBox } from '@/components/ui/fancy-box';
 import { Button } from '@/components/ui/button';
 import Autocomplete from '@/components/Autocomplete';
-import { useCallback } from 'react';
+import { useState } from 'react';
+
 export default function ProjectForm() {
+  // states
+  const [contributors, setContributors] = useState<any[]>([]);
+  
   function handleProjectSubmission() {
     console.log('Submitting Project');
   }
@@ -24,7 +28,7 @@ export default function ProjectForm() {
     mode: 'onTouched',
   });
   return (
-    <form action="" className="flex flex-col gap-4 p-4">
+    <form className="flex flex-col gap-4 p-4">
       <Input placeholder="Project Title" />
       <div className="grid w-full gap-1.5">
         <Label htmlFor="message">
@@ -40,7 +44,7 @@ export default function ProjectForm() {
 
       <Input placeholder="Source Code Link" />
       <FancyBox />
-      <Autocomplete />
+      <Autocomplete  />
       <Button onClick={handleProjectSubmission}>Submit Project</Button>
     </form>
   );

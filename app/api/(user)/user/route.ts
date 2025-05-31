@@ -4,7 +4,7 @@ import db from '@/db/db';
 export async function GET(req: NextRequest) {
   const serchParams = req.nextUrl.searchParams;
   const query = serchParams.get('q')?.toLowerCase();
-  let exclude: number = parseInt(serchParams.get('exclude') as string);
+  let exclude: number = parseInt(serchParams.get('exclude') as     string);
   if (!exclude) exclude = 0;
 
   const [results] = await db.query(

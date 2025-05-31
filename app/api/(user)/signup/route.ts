@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { UserSchema } from '@/lib/ZodSchema/UserSchema';
 import db from '@/db/db';
@@ -12,7 +11,7 @@ interface body {
 }
 
 export async function POST(req: NextRequest) {
-  const body: body = await req.json();
+  const body: any = await req.json();
   console.log('On server', body);
   const parsed = UserSchema.safeParse(body);
   if (!parsed.success) {
